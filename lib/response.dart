@@ -198,7 +198,7 @@ class Forecast {
   double low;
   double high;
   String text;
-  double code;
+  int code;
 
   factory Forecast.fromRawJson(String str) =>
       Forecast.fromJson(json.decode(str));
@@ -211,7 +211,7 @@ class Forecast {
         low: json["low"].toDouble(),
         high: json["high"].toDouble(),
         text: json["text"],
-        code: json["code"].toDouble(),
+        code: json["code"],
       );
 
   Map<String, dynamic> toJson() => {

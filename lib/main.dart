@@ -243,7 +243,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 (temperature == null)
                     ? const CircularProgressIndicator()
                     : Text(
-                        "${double.parse((celsius).toStringAsFixed(0))}°",
+                        "${double.parse((celsius).toStringAsFixed(1))}°",
                         textAlign: TextAlign.start,
                         style: GoogleFonts.acme(
                             fontSize: 100, color: Colors.white),
@@ -284,6 +284,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     subtitle: Container(
+                      width: 200,
                       height: 30,
                       decoration: BoxDecoration(
                         image: DecorationImage(
