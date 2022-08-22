@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final welcome = welcomeFromJson(jsonString);
-
 import 'dart:convert';
 
 class Welcome {
@@ -105,10 +101,10 @@ class Atmosphere {
     required this.rising,
   });
 
-  int humidity;
+  double humidity;
   double visibility;
   double pressure;
-  int rising;
+  double rising;
 
   factory Atmosphere.fromRawJson(String str) =>
       Atmosphere.fromJson(json.decode(str));
@@ -116,10 +112,10 @@ class Atmosphere {
   String toRawJson() => json.encode(toJson());
 
   factory Atmosphere.fromJson(Map<String, dynamic> json) => Atmosphere(
-        humidity: json["humidity"],
-        visibility: json["visibility"],
+        humidity: json["humidity"].toDouble(),
+        visibility: json["visibility"].toDouble(),
         pressure: json["pressure"].toDouble(),
-        rising: json["rising"],
+        rising: json["rising"].toDouble(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -139,7 +135,7 @@ class Condition {
 
   int code;
   String text;
-  int temperature;
+  double temperature;
 
   factory Condition.fromRawJson(String str) =>
       Condition.fromJson(json.decode(str));
@@ -149,7 +145,7 @@ class Condition {
   factory Condition.fromJson(Map<String, dynamic> json) => Condition(
         code: json["code"],
         text: json["text"],
-        temperature: json["temperature"],
+        temperature: json["temperature"].toDouble(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -166,18 +162,18 @@ class Wind {
     required this.speed,
   });
 
-  int chill;
-  int direction;
-  int speed;
+  double chill;
+  double direction;
+  double speed;
 
   factory Wind.fromRawJson(String str) => Wind.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
   factory Wind.fromJson(Map<String, dynamic> json) => Wind(
-        chill: json["chill"],
-        direction: json["direction"],
-        speed: json["speed"],
+        chill: json["chill"].toDouble(),
+        direction: json["direction"].toDouble(),
+        speed: json["speed"].toDouble(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -189,7 +185,7 @@ class Wind {
 
 class Forecast {
   Forecast({
-    required this.day,
+    this.day,
     required this.date,
     required this.low,
     required this.high,
@@ -197,12 +193,12 @@ class Forecast {
     required this.code,
   });
 
-  String day;
-  int date;
-  int low;
-  int high;
+  String? day;
+  double date;
+  double low;
+  double high;
   String text;
-  int code;
+  double code;
 
   factory Forecast.fromRawJson(String str) =>
       Forecast.fromJson(json.decode(str));
@@ -211,11 +207,11 @@ class Forecast {
 
   factory Forecast.fromJson(Map<String, dynamic> json) => Forecast(
         day: json["day"],
-        date: json["date"],
-        low: json["low"],
-        high: json["high"],
+        date: json["date"].toDouble(),
+        low: json["low"].toDouble(),
+        high: json["high"].toDouble(),
         text: json["text"],
-        code: json["code"],
+        code: json["code"].toDouble(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -241,7 +237,7 @@ class Location {
 
   String city;
   String region;
-  int woeid;
+  double woeid;
   String country;
   double lat;
   double long;
@@ -255,7 +251,7 @@ class Location {
   factory Location.fromJson(Map<String, dynamic> json) => Location(
         city: json["city"],
         region: json["region"],
-        woeid: json["woeid"],
+        woeid: json["woeid"].toDouble(),
         country: json["country"],
         lat: json["lat"].toDouble(),
         long: json["long"].toDouble(),
@@ -263,6 +259,7 @@ class Location {
       );
 
   Map<String, dynamic> toJson() => {
+        "city": city,
         "region": region,
         "woeid": woeid,
         "country": country,

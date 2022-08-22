@@ -43,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Welcome? condition;
   var temperature;
   String? curtemperature;
-  var celsius;
+  double celsius = 0;
   var text;
   var lat;
   var long;
@@ -73,6 +73,8 @@ class _MyHomePageState extends State<MyHomePage> {
       lat = position.latitude;
       long = position.longitude;
       textController.text = '';
+      print(lat);
+      print(long);
     });
     API().getCurrentWeather(lat, long).then((value) {
       setState(() {
@@ -90,7 +92,6 @@ class _MyHomePageState extends State<MyHomePage> {
     weather = null;
     day = [];
     temperature = null;
-    celsius = null;
     text = null;
     city = '';
     condition = null;
@@ -165,7 +166,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.5,
-            height: 40,
+            height: 45,
             child: TextField(
               onSubmitted: (String str) {
                 setState(() {
@@ -208,10 +209,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 getLocation();
                 setClear();
               },
-              icon: const Icon(
-                Icons.location_on,
-                color: Colors.white,
-              )),
+              icon:
+                  const Icon(Icons.location_on, color: Colors.white, size: 25)),
         ]),
       ),
       body: Column(
