@@ -72,6 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       lat = position.latitude;
       long = position.longitude;
+      textController.text = '';
     });
     API().getCurrentWeather(lat, long).then((value) {
       setState(() {
@@ -83,6 +84,17 @@ class _MyHomePageState extends State<MyHomePage> {
         city = weather!.location.city;
       });
     });
+  }
+
+  void setClear() {
+    weather = null;
+    day = [];
+    temperature = null;
+    celsius = null;
+    text = null;
+    city = '';
+    condition = null;
+    curtemperature = null;
   }
 
   Future<Position> _determinePosition() async {
@@ -152,26 +164,29 @@ class _MyHomePageState extends State<MyHomePage> {
         title:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           SizedBox(
-            width: 200,
+            width: MediaQuery.of(context).size.width * 0.5,
             height: 40,
             child: TextField(
               onSubmitted: (String str) {
                 setState(() {
                   getCityWeather();
+                  setClear();
                 });
               },
               controller: textController,
               decoration: InputDecoration(
+                isDense: true,
+                contentPadding: EdgeInsets.only(top: 15, bottom: 15, left: 8),
                 hintText: "Search ...",
                 filled: true,
                 fillColor: Colors.white,
-                hintStyle: const TextStyle(fontSize: 14),
                 suffixIcon: (buttonActive)
                     ? null
                     : IconButton(
                         splashRadius: 1,
                         onPressed: () {
                           getCityWeather();
+                          setClear();
                         },
                         icon: const Icon(
                           Icons.search,
@@ -179,6 +194,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         )),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
+                  borderSide: const BorderSide(
+                    width: 0,
+                    style: BorderStyle.none,
+                  ),
                 ),
               ),
             ),
@@ -187,6 +206,7 @@ class _MyHomePageState extends State<MyHomePage> {
               splashRadius: 15,
               onPressed: () {
                 getLocation();
+                setClear();
               },
               icon: const Icon(
                 Icons.location_on,
@@ -258,26 +278,28 @@ class _MyHomePageState extends State<MyHomePage> {
                   var low_end = ((low - 32) * 5 / 9).toString();
                   return ListTile(
                     leading: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      padding: const EdgeInsets.only(top: 10),
                       child: Text(
                         "${day[index].day}",
                         style: const TextStyle(color: Colors.white),
                       ),
                     ),
                     subtitle: Container(
-                      width: 20.0,
                       height: 30,
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage(
-                              'images/clouds/${day[index].code}.png'),
+                            'images/clouds/${day[index].code}.png',
+                          ),
                         ),
-                        borderRadius: BorderRadius.circular(80.0),
                       ),
                     ),
-                    trailing: Text(
-                      "${double.parse(high_end).toStringAsFixed(0)}°",
-                      style: const TextStyle(color: Colors.white),
+                    trailing: Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Text(
+                        "${double.parse(high_end).toStringAsFixed(0)}°",
+                        style: const TextStyle(color: Colors.white),
+                      ),
                     ),
                   );
                 },
